@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
 import './presentation/router/app_router.dart';
-void main(){
+import 'package:flutter_bloc/flutter_bloc.dart';
+import './logic/cubit/counter_cubit.dart';
+
+void main() {
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bloc App',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.black,
-        accentColor: Colors.black
+    return BlocProvider(
+      create: (context) => CounterCubit(),
+      child: MaterialApp(
+        title: 'Bloc App',
+        debugShowCheckedModeBanner: false,
+        initialRoute: AppRouter.home,
+        onGenerateRoute: AppRouter.onGenerateRoute,
       ),
-      initialRoute: AppRouter.home,
-      onGenerateRoute: AppRouter.onGenerateRoute,
     );
   }
 }
-
