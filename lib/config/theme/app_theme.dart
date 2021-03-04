@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter/services.dart';
 
 class AppTheme {
-  static Color lightprimaryColor = Color(0XFFFFFF);
-  static Color lightaccentColor = Color(0XFFFFFF);
-  static Color lightbackgroundColor = Color(0XFFFFFF);
+  static Color lightbackgroundColor = const Color(0XFFFFFFFFF);
+  static Color lightprimaryColor = const Color(0XFFFFFFFFF);
+  static Color lightaccentColor = const Color(0XFFF2076bd);
 
-  static Color darkprimaryColor = Color(0XFFFFFF);
-  static Color darkaccentColor = Color(0XFFFFFF);
-  static Color darkbackgroundColor = Color(0XFFFFFF);
+  static Color darkbackgroundColor = const Color(0XFF0000000);
+  static Color darkprimaryColor = const Color(0XFF0000000);
+  static Color darkaccentColor = const Color(0XFFF2076bd);
 
   const AppTheme._();
 
@@ -26,4 +28,21 @@ class AppTheme {
     backgroundColor: darkbackgroundColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
   );
+
+  static Brightness get currentSystemBrightness =>
+      SchedulerBinding.instance.window.platformBrightness;
+
+  static setStatusAndNavBarColor(ThemeMode themeMode) {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness:
+            themeMode == ThemeMode.light ? Brightness.dark : Brightness.light,
+        systemNavigationBarColor: themeMode == ThemeMode.light
+            ? lightbackgroundColor
+            : darkbackgroundColor,
+        systemNavigationBarDividerColor: Colors.transparent,
+      ),
+    );
+  }
 }
